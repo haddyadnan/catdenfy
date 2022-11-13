@@ -15,7 +15,7 @@ body {
     /* height: 400px;  commenting out the height because we are don scaffolding, we only needed it to see our work fully 8 */
     border-radius: 5px; /*rounded corners*/
     padding-top: 10px;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 .card-image {
@@ -60,4 +60,28 @@ body {
 
 .file-butt {
     width: 480px;
+}
+
+ul.nav {
+    margin:0;
+    padding:0;
+    list-style:none;
+    height:36px; line-height:36px;
+    background: rgb(134, 92, 92);
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:13px;
+}
+ul.nav li {
+    border-right:1px solid #e7e1e5; 
+    float:left;
+}
+ul.nav a {
+    display:block;
+    padding:0 28px;
+    color: #ebbde0;
+    text-decoration:none;
+}
+ul.nav a:hover,
+ul.nav li.current a {
+    background: rgb(103, 60, 60);
 }
