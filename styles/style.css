@@ -36,6 +36,10 @@ body {
     padding-top: 10px;
 }
 
+.card button:hover {
+    background: rgb(134, 92, 92);
+}
+
 .card-buttons-container2 {
     width: 480px;
     margin-right: auto;
