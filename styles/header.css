@@ -1,0 +1,12 @@
+header {
+    background-color: white;
+    display: flex;
+    justify-content:space-between;
+    border-bottom: 1px solid #cccccc;
+    height: 50px;
+}
+header .welcome {
+    margin-right: 30px;
+    font-size: large;
+}
+
