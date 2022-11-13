@@ -15,7 +15,7 @@ body {
     /* height: 400px;  commenting out the height because we are don scaffolding, we only needed it to see our work fully 8 */
     border-radius: 5px; /*rounded corners*/
     padding-top: 10px;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .card-image {
