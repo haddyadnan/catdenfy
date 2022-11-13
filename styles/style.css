@@ -67,7 +67,7 @@ ul.nav {
     padding:0;
     list-style:none;
     height:36px; line-height:36px;
-    background: rgb(134, 92, 92);
+    background: rgb(103, 60, 60);
     font-family:Arial, Helvetica, sans-serif;
     font-size:13px;
 }
@@ -83,5 +83,5 @@ ul.nav a {
 }
 ul.nav a:hover,
 ul.nav li.current a {
-    background: rgb(103, 60, 60);
+    background:  rgb(134, 92, 92);
 }
