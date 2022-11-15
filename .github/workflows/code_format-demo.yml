@@ -1,32 +1,32 @@
 ---
-name: set-up code quality
-run-name: ${{ github.actor }} is running
+name: Check Code Quality
+
 on:
   push:
     branches: [main]
 
 jobs:
-  code-quality:
+  Code-Quality:
+    name: CodeQuality
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.8, 3.9, 3.10]
         os: [ubuntu-latest]
-    runs-on: ${{ matrix.os }}
-    
+        python-version: [3.8]
+
     steps:
     - uses: actions/checkout@v2
-        with:actions/setup-python@v2
-        python-version:${{ matrix.python-version }}
-
-    - name: Check Python version
-      run: python -c "import sys; print(sys.version)"
+    - name: set up python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
 
     - name: Install dependencies
       run: |
-          pip install black
-          pip install flake8
-          pip install isort
+        pip install black
+        pip install isort
+        pip install flake8
 
     - name: Run black
       run: black .
