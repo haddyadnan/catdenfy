@@ -1,9 +1,9 @@
+---
 name: set-up code quality
 run-name: ${{ github.actor }} is running
 on:
   push:
     branches: [main]
-
 
 jobs:
   code-quality:
@@ -15,12 +15,13 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
+      - name: set up
       - uses:
         with: actions/setup-python@v2
-          python-version: ${{ matrix.python-version }}
+        python-version: ${{ matrix.python-version }}
 
       - name: Check Python version
-        run:  python -c "import sys; print(sys.version)"
+        run: python -c "import sys; print(sys.version)"
 
       - name: Install dependencies
         run: |
