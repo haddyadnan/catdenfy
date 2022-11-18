@@ -58,6 +58,27 @@ body {
 
 }
 
+.drop {
+    display: flex;
+    justify-content:start;
+    align-items: center;
+    font-size: large;
+    margin-top: 50px;
+}
+
+.example-container {
+    width: 200px;
+    margin-right: auto;
+    margin-left: 10px;
+    background-color: #ccc;
+    border-radius: 5px;
+    height: 200px;
+    display: flex;
+    justify-content: space-around;
+}
+
+
+
 .file-button {
     width: 48%;
 } /* this is an extra class for the two card buttons in card 1, because it dosen't share the same width as card 2 */
