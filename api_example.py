@@ -1,10 +1,5 @@
 import requests
-
-# from io import BytesIO
-# from PIL import Image
 import base64
-
-# img = Image.open("static/images/index.jpeg")
 
 with open("static/images/index.jpeg", "rb") as img_file:
     img_str = base64.b64encode(img_file.read()).decode()
