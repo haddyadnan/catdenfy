@@ -16,5 +16,5 @@ response = requests.post(
 results = response["data"][0]
 print(results.get("label").replace("_", " "))
 probs = results.get("confidences")
-probs_dict = {list(p.values())[0]: list(p.values())[1] for p in probs}
+probs_dict = {list(p.values())[0].replace("_", " "): list(p.values())[1] for p in probs}
 print(probs_dict)
