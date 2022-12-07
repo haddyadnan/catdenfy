@@ -129,3 +129,6 @@ dmypy.json
 .pyre/
 
 *.pkl
+/node_modules
+package-lock.json
+try.js
