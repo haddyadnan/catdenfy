@@ -1,63 +1,102 @@
-#!/usr/bin/python3
-
-from flask import Flask, render_template, jsonify, request, flash, redirect, url_for
-from werkzeug.utils import secure_filename
-from fastai.vision.all import *
-from io import BytesIO
 import base64
+import os
+import urllib.request
+
+import requests
+from flask import Flask, flash, jsonify, redirect, render_template, request, url_for
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
-learn = None
-labels = None
+UPLOAD_FOLDER = "static/uploads/"
 
-allowed_ext = ["jpg", "jpeg", "png", "JPG", "JPEG", "PNG"]
+app.secret_key = "summer"  # test
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024
+
+allowed_ext = set(["png", "jpg", "jpeg"])
 
 
 def check_allowed_file(filename):
+    """check file extension"""
     return "." in filename and filename.rsplit(".", 1)[1].lower() in allowed_ext
 
 
-# def load_model():
-#     global learn
-#     global labels
-#     learn = load_learner("export.pkl")
-#     labels = learn.dls.vocab
+@app.route("/")
+def home():
+    """render home page"""
+    return render_template("index.html")
 
 
-@app.route("/", methods=["GET", "POST"])
-def index():
-    if request.method == "POST":
-        if "file" not in request.files:
-            print("No files here")
-            return redirect(request.url)
-        file = request.files["file"]
-        if file.filename == "":
-            print("No file selected here")
-            return redirect(request.url)
-        if file and check_allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            img = Image.open(file.stream)
-            with BytesIO() as buf:
-                img.save(buf, "jpeg")
-                image_bytes = buf.getvalue()
-            encoded_string = base64.b64encode(image_bytes).decode()
-        return render_template("index.html", img_data=encoded_string), 200
+@app.route("/", methods=["POST"])
+def upload_image():
+    """upload image file"""
+    global filename
+    if "file" not in request.files:
+        flash("No file part")
+        return redirect(request.url)
+    file = request.files["file"]
+    if file.filename == "":
+        flash("No image selected for uploading")
+        return redirect(request.url)
+    if file and check_allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+        # print('upload_image filename: ' + filename)
+        flash("Image successfully uploaded")
+        return render_template("index.html", filename=filename)
     else:
-        return render_template("index.html", img_data=""), 200
+        flash("Allowed image types are - png, jpg, jpeg")
+        return redirect(request.url)
 
 
-@app.route("/predict", methods=["GET", "POST"])
+@app.route("/display/<filename>")
+def display_image(filename):
+    """
+    display img
+    filename: Name of image file
+    """
+    return redirect(url_for("static", filename="uploads/" + filename))
+
+
+@app.route("/clear", methods=["POST"])
+def clear():
+    """
+    remove image file
+    global filename
+    """
+    os.remove(UPLOAD_FOLDER + filename)
+    return redirect("/")
+
+
+@app.route("/predict", methods=["POST", "GET"])
 def predict():
     """
-    receive image
+    predict image
     """
+    with open(UPLOAD_FOLDER + filename, "rb") as img_file:
+        img_str = base64.b64encode(img_file.read()).decode()
 
-    return jsonify(message="Success")
+    response = requests.post(
+        "https://haddy-catdenfy.hf.space/run/predict",
+        json={
+            "data": [
+                "data:image/png;base64,{}".format(img_str),
+            ]
+        },
+    ).json()
+
+    results = response["data"][0]
+    print(results.get("label").replace("_", " "))
+    probs = results.get("confidences")
+    probs_dict = {
+        list(p.values())[0].replace("_", " "): list(p.values())[1] for p in probs
+    }
+    # print(probs_dict)
+
+    return jsonify(probs, probs.label)
 
 
 if __name__ == "__main__":
-    print(" * Loading Model . . .")
-    # load_model()
-    print(" * Model Loaded . . .")
+    # test
     app.run(port="5020", host="0.0.0.0", debug=True)
