@@ -1,63 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catdenfy</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.css">
-    <link rel="stylesheet" href="../static/styles/style.css">
-    <link rel="stylesheet" href="../static/styles/header.css">
-    <link rel="stylesheet" href="../static/styles/footer.css">
-    <link rel="icon" href="../static/images/iconcat.png">
-</head>
-<body>
-    <header>
-        <img src="./static/images/caty.png" alt="logo">
-        <p class="welcome">...Welcome to Catdenfy! We identify your Cat.</p>
 
-    </header>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Catdenfy</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.css">
+        <link rel="stylesheet" href="../static/styles/style.css">
+        <link rel="stylesheet" href="../static/styles/header.css">
+        <link rel="stylesheet" href="../static/styles/footer.css">
+        <link rel="icon" href="../static/images/iconcat.png">
+    </head>
 
-    <ul class="nav">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Services</a></li>
-        <li><a href="#">Products</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
+    <body>
+        <header>
+            <img src="../static/images/caty.png" alt="logo">
+            <p class="welcome">...Welcome to Catdenfy! We identify your Cat.</p>
+
+        </header>
+
+        <ul class="nav">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
 
 
-    <div class="main">
-        <div class="card">
-            <div class="card-image">
-                <form method="post" enctype="multipart/form-data">
-                    <p><input type="file" id="file" name="file"><input type=submit value=Upload></p>
-                    <img src="data:image/jpeg;base64,{{ img_data }}" id="img-upload" alt="img_data" class="img-upload"/>
-                </form>
-              </body>
-            </div><!--card image 1-->
-            <div class="card-buttons-container">
-                <button type="button" class="card-button file-button">
-                    Clear
-                </button>
-                <button type="button" action="/submit" class="card-button file-button">
-                    Submit
-                </button>
-            </div><!--card buttons-->
-        </div><!--card 1-->
+        <div class="main">
+            <div class="card">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
 
-        <div class="card">
-            <div class="card-image">
-                {{ info }}
-            </div><!--card image 2-->
-            <div class="card-buttons-container2">
-                <button type="button" class="card-button file-butt">
-                    Flag
-                </button>
-            </div><!--card buttons-->
-        </div><!--card2-->
-    </div><!--main-->
+                <div class="card-image">
+                    <form method="POST" action='/' enctype="multipart/form-data">
 
-</body>
-<footer>CATDENFY</footer>
+                        {% if filename %}
+                        <div class="url_image">
+                            <img src="{{ url_for('display_image', filename=filename) }}">
+                        </div>
+                        {% else %}
+                        <p><input type="file" name="file" required><input type=submit value=Upload></p>
+                        {% endif %}
+                        <button formmethod="post" type="submit" formaction="/predict">Predict</button>
+                        <button formmethod="post" type="submit" formaction="/clear">Clear</button>
+                    </form>
+                </div><!--card image 1-->
+                <div class="card-buttons-container">
+                    <button type="button" class="card-button file-button">
+                        Clear
+                    </button>
+                    <button type="button" action="/submit" class="card-button file-button">
+                        Submit
+                    </button>
+                </div><!--card buttons-->
+            </div><!--card 1-->
+
+            <div class="card">
+                <div class="card-image">
+                    {% if prediction %}
+                    {{ prediction }}
+                    {% endif %}
+                </div><!--card image 2-->
+                <div class="card-buttons-container2">
+                    <button type="button" class="card-button file-butt">
+                        Flag
+                    </button>
+                </div><!--card buttons-->
+            </div><!--card2-->
+        </div><!--main-->
+
+    </body>
+    <footer>CATDENFY</footer>
+
 </html>

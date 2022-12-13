@@ -132,3 +132,4 @@ dmypy.json
 /node_modules
 package-lock.json
 try.js
+try.py
