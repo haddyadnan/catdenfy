@@ -1,21 +1,49 @@
-body {
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.creative {
+    background-color:rgb(184, 136, 136) ;
+    opacity: 50%;
+}
+
+/* body {
     margin: 0;
     padding: 0;
     
-}
+} */
 
 .main {
     display: flex;
     justify-content: space-around;
-}
+} 
+
+.banner {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75)),url(../images/backgroundproject.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat:no-repeat;
+} 
 
 .card {
     width: 500px; 
     background-color: #ccc;
+    background:pink;
+    opacity: 90%;
     /* height: 400px;  commenting out the height because we are don scaffolding, we only needed it to see our work fully 8 */
     border-radius: 5px; /*rounded corners*/
     padding-top: 10px;
-    margin-top: 15px;
+    margin-top: 25px;
+}
+
+.logo{
+    width: 120px;
+    cursor: pointer;
+    opacity: 100%;
+    
 }
 
 .card-image {
@@ -23,8 +51,28 @@ body {
     margin-right: auto;
     margin-left: auto;
     background-color: #fff;
+    opacity: 85%;
     border-radius: 5px;
     height: 250px;
+    
+}
+
+.card-image form{
+    width: 100%;
+    height: 100%;
+}
+
+.url_image {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.url_image img {
+    width: 50%;
+    height: 90%;
 }
 
 .card-buttons-container {
@@ -34,10 +82,7 @@ body {
     display: flex;
     justify-content: space-between;
     padding-top: 10px;
-}
-
-.card button:hover {
-    background: rgb(134, 92, 92);
+    /* display: none; */
 }
 
 .card-buttons-container2 {
@@ -58,7 +103,20 @@ body {
 
 }
 
-.drop {
+ .card button:hover {
+    background-color: rgb(184, 136, 136); /* note: added .card at the start because all are incide the card */
+    
+}
+
+.file-button {
+    width: 48%;
+} /* this is an extra class for the two card buttons in card 1, because it dosen't share the same width as card 2 */
+
+.file-butt {
+    width: 480px;
+}
+
+/* .drop {
     display: flex;
     justify-content:start;
     align-items: center;
@@ -75,38 +133,81 @@ body {
     height: 200px;
     display: flex;
     justify-content: space-around;
-}
+} */
 
-
-
-.file-button {
-    width: 48%;
-} /* this is an extra class for the two card buttons in card 1, because it dosen't share the same width as card 2 */
-
-.file-butt {
-    width: 480px;
-}
+/* .card.example-container :hover {
+    border: 2px solid red;
+} */
 
 ul.nav {
     margin:0;
     padding:0;
     list-style:none;
     height:36px; line-height:36px;
-    background: rgb(103, 60, 60);
+
+    /* background: rgb(134, 92, 92); */
     font-family:Arial, Helvetica, sans-serif;
     font-size:13px;
+    margin-top: 15px;
 }
 ul.nav li {
-    border-right:1px solid #e7e1e5; 
+    /* border-right:1px solid #e7e1e5;  */
     float:left;
-}
+} 
 ul.nav a {
     display:block;
     padding:0 28px;
     color: #ebbde0;
+    color: grey;
     text-decoration:none;
+    opacity: 100%;
 }
-ul.nav a:hover,
+
+/* ul.nav li::after{
+    content: '';
+    height: 3px;
+    width:0;
+    background: #009688;
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    transition: 0.5s;
+} */
+
+ul.nav li:hover::after{
+    background-color: aqua;
+}
+
+
+/* ul.nav a:hover,
 ul.nav li.current a {
-    background:  rgb(134, 92, 92);
+    background: rgb(103, 60, 60);
+    background: grey;
+} */
+
+
+/* .navbar ul li{
+    list-style: none;
+    display: inline-block;
+    margin: 0 20px;
+    position: relative;
 }
+.navbar ul li a{
+    text-decoration: none;
+    color: #fff;
+    text-transform: uppercase;
+}
+.navbar ul li::after{
+    content: '';
+    height: 3px;
+    width:0;
+    background: #009688;
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    transition: 0.5s;
+}
+.navbar ul li:hover::after{
+    width: 100%;
+} */
+
