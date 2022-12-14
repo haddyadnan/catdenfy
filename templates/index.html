@@ -44,7 +44,14 @@
 
             <div class="card">
               <div class="card-image">
-                <div class="preview-img-container"></div>
+                <div class="preview-img-container">
+                  <ul>
+                    <li>
+
+                    </li>
+                  </ul>
+
+                </div>
               </div>
 
               <div class="card-buttons-container2">
@@ -66,10 +73,12 @@
         const previewImageContainer = document.querySelector(
           ".preview-img-container"
         );
+        const predictImage = document.querySelector(".submit-image");
         const image = document.createElement("img");
         const prevImage = document.createElement("img");
         let imgURL;
         let imgFile;
+        const predictUrl = {{ url_for("predict")|tojson}};
 
         // onChange Event Handler
         imgInput.addEventListener("change", function (e) {
@@ -94,10 +103,24 @@
           clearSubmitButtonContainer.style.display = "none";
         });
 
-        submitImageButton.addEventListener("click", () => {
-          previewImageContainer.classList.add("url_image");
-          previewImageContainer.appendChild(prevImage);
+        predictImage.addEventListener("click", () => {
+          const r = new FileReader()
+          r.readAsDataURL(imgInput.files[0])
+          r.onloadend = function() {
+            const basedata = r.result;
+
+          fetch(predictUrl, {
+            "method": "POST",
+            "headers": {"Content-Type": "application/json"},
+            "body": JSON.stringify(basedata),
+          });}
         });
+
+
+        //submitImageButton.addEventListener("click", () => {
+          //previewImageContainer.classList.add("url_image");
+          //previewImageContainer.appendChild(prevImage);
+        //});
       </script>
 </body>
 </html>

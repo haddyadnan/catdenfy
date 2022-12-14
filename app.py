@@ -1,6 +1,5 @@
 import base64
 import os
-import urllib.request
 
 import requests
 from flask import Flask, flash, jsonify, redirect, render_template, request, url_for
@@ -74,27 +73,25 @@ def predict():
     """
     predict image
     """
-    with open(UPLOAD_FOLDER + filename, "rb") as img_file:
-        img_str = base64.b64encode(img_file.read()).decode()
 
-    response = requests.post(
-        "https://haddy-catdenfy.hf.space/run/predict",
-        json={
-            "data": [
-                "data:image/png;base64,{}".format(img_str),
-            ]
-        },
-    ).json()
+    if request.method == "POST":
+        img_str = request.json
+        response = requests.post(
+            "https://haddy-catdenfy.hf.space/run/predict",
+            json={"data": [img_str]},
+        ).json()
 
-    results = response["data"][0]
-    print(results.get("label").replace("_", " "))
-    probs = results.get("confidences")
-    probs_dict = {
-        list(p.values())[0].replace("_", " "): list(p.values())[1] for p in probs
-    }
-    # print(probs_dict)
+        results = response["data"][0]
+        print(results.get("label").replace("_", " "))
+        probs = results.get("confidences")
+        probs_dict = {
+            list(p.values())[0].replace("_", " "): list(p.values())[1] for p in probs
+        }
+        print(probs_dict)
 
-    return jsonify(probs, probs.label)
+        return render_template("index.html", probs=probs_dict)
+
+    return render_template("index.html")
 
 
 if __name__ == "__main__":
