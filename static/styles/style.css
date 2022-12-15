@@ -108,6 +108,7 @@
     
 }
 
+
 .file-button {
     width: 48%;
 } /* this is an extra class for the two card buttons in card 1, because it dosen't share the same width as card 2 */
@@ -277,6 +278,93 @@ ul.nav li.current a {
 
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1024px) {
+    .main {
+        display: flex;
+        justify-content: space-around;
+    } 
 
+    .card {
+        width: 500px; 
+        background-color: #ccc;
+        background:pink;
+        opacity: 90%;
+        /* height: 400px;  commenting out the height because we are don scaffolding, we only needed it to see our work fully 8 */
+        border-radius: 5px; /*rounded corners*/
+        padding-top: 10px;
+        margin-top: 25px;
+    }
+    
+    .logo{
+        width: 120px;
+        cursor: pointer;
+        opacity: 100%;
+        
+    }
+    
+    .card-image {
+        width: 480px;
+        margin-right: auto;
+        margin-left: auto;
+        background-color: #fff;
+        opacity: 85%;
+        border-radius: 5px;
+        height: 250px;
+        
+    }
+    
+    .card-image form{
+        width: 100%;
+        height: 100%;
+    }
+
+    .card-buttons-container {
+        width: 480px; /* this is so that it has the same width as the card-image */
+        margin-right: auto; /* to centralize the container in the card image */
+        margin-left: auto;  /* to centralize the container in the card image */
+        display: flex;
+        justify-content: space-between;
+        padding-top: 10px;
+        /* display: none; */
+    }
+    
+    .card-buttons-container2 {
+        width: 480px;
+        margin-right: auto;
+        margin-left: auto;
+        padding-top: 10px;
+        
+    }
+    
+    .card-button {
+        padding-top: 15px; /* making the text far from the borders */
+        padding-bottom: 15px;
+        border: none;
+        border-radius: 3px;
+        font-family: sans-serif;
+        margin-bottom: 10px;
+    
+    }
+    
+     .card button:hover {
+        background-color: rgb(184, 136, 136); /* note: added .card at the start because all are incide the card */
+        
+    }
+    
+    
+    .file-button {
+        width: 48%;
+    } /* this is an extra class for the two card buttons in card 1, because it dosen't share the same width as card 2 */
+    
+    .file-butt {
+        width: 478px;
+        padding-top: 15px; /* making the text far from the borders */
+        padding-bottom: 15px;
+        border: none;
+        border-radius: 3px;
+        font-family: sans-serif;
+        margin-bottom: 10px;
+        margin-right:auto;
+        margin-left: auto;
+    }
 }
