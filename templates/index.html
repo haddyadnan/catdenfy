@@ -1,103 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Catdenfy</title>
-    <link rel="stylesheet" href="../static/styles/style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../static/styles/style.css" />
+  </head>
+
+  <body>
     <div class="banner">
-        <div class="navbar">
-            <img src="../static/images/iconcat.png" class="logo">
-            <ul>
-                <li><a href="https://haddyadnan.wixsite.com/catdenfy" target="_blank">Home</a></li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Features</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </div>
-        <div class="main">
-            <div class="card">
-              <div class="card-image">
-                <form method="POST" action="/" enctype="multipart/form-data">
-                  <div class="img-container"></div>
+      <div class="navbar">
+        <img src="../static/images/iconcat.png" class="logo" />
+        <ul>
+          <li>
+            <a href="https://haddyadnan.wixsite.com/catdenfy" target="_blank"
+              >Home</a
+            >
+          </li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Features</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="main">
+        <div class="card">
+          <div class="card-image">
+            <form method="POST" action="/" enctype="multipart/form-data">
+              <div class="img-container"></div>
 
-                  <div class="input-container">
-                    <input class="image-file" type="file" name="file" required />
-                  </div>
-                </form>
+              <div class="input-container">
+                <input class="image-file" type="file" name="file" required />
               </div>
-
-              <div class="card-buttons-container">
-                <button type="button" class="card-button file-button clear-image">
-                  Clear
-                </button>
-                <button type="button" class="card-button file-button submit-image">
-                  Submit
-                </button>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="card-image">
-                <div class="preview-img-container"></div>
-              </div>
-
-              <div class="card-buttons-container2">
-                <button type="button" class="card-button file-butt">Flag</button>
-              </div>
-            </div>
+            </form>
           </div>
+
+          <div class="card-buttons-container">
+            <button type="button" class="card-button file-button clear-image">
+              Clear
+            </button>
+            <button type="button" class="card-button file-button submit-image">
+              Submit
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-image">
+            <div class="preview-img-container"></div>
+            <table id="data-table"></table>
+          </div>
+       
+          <div class="card-buttons-container2">
+            <button type="button" class="card-button file-butt">Flag</button>
+          </div>
+        </div>
+      </div>
     </div>
     <script>
-        // url_image
-        const imgInput = document.querySelector(".image-file");
-        const imageContainer = document.querySelector(".img-container");
-        const inputContainer = document.querySelector(".input-container");
-        const clearSubmitButtonContainer = document.querySelector(
-          ".card-buttons-container"
-        );
-        const clearImageButton = document.querySelector(".clear-image");
-        const submitImageButton = document.querySelector(".submit-image");
-        const previewImageContainer = document.querySelector(
-          ".preview-img-container"
-        );
-        const image = document.createElement("img");
-        const prevImage = document.createElement("img");
-        let imgURL;
-        let imgFile;
+      // url_image
+      const imgInput = document.querySelector(".image-file");
+      const imageContainer = document.querySelector(".img-container");
+      const inputContainer = document.querySelector(".input-container");
+      const clearSubmitButtonContainer = document.querySelector(
+        ".card-buttons-container"
+      );
+      const clearImageButton = document.querySelector(".clear-image");
+      const submitImageButton = document.querySelector(".submit-image");
+      const previewImageContainer = document.querySelector(
+        ".preview-img-container"
+      );
+      const predictImage = document.querySelector(".submit-image");
+      const image = document.createElement("img");
+      const prevImage = document.createElement("img");
+      let imgURL;
+      let imgFile;
+      const predictUrl = {{ url_for("predict") | tojson}};
 
-        // onChange Event Handler
-        imgInput.addEventListener("change", function (e) {
-          imgFile = e.target.files[0];
-          imgURL = URL.createObjectURL(imgFile);
-          image.setAttribute("src", imgURL);
-          prevImage.setAttribute("src", imgURL);
-          imageContainer.classList.add("url_image");
-          inputContainer.style.display = "none";
-          imageContainer.appendChild(image);
-          clearSubmitButtonContainer.style.display = "flex";
-        });
+      // onChange Event Handler
+      imgInput.addEventListener("change", function (e) {
+        imgFile = e.target.files[0];
+        imgURL = URL.createObjectURL(imgFile);
+        image.setAttribute("src", imgURL);
+        prevImage.setAttribute("src", imgURL);
+        imageContainer.classList.add("url_image");
+        inputContainer.style.display = "none";
+        imageContainer.appendChild(image);
+        clearSubmitButtonContainer.style.display = "flex";
+      });
 
-        clearImageButton.addEventListener("click", (e) => {
-          imageContainer.removeChild(image);
-          imageContainer.classList.remove("url_image");
-          inputContainer.style.display = "flex";
-          if (previewImageContainer.children.length) {
-            previewImageContainer.removeChild(prevImage);
-            previewImageContainer.classList.remove("url_image");
-          }
-          clearSubmitButtonContainer.style.display = "none";
-        });
+      clearImageButton.addEventListener("click", (e) => {
+        imageContainer.removeChild(image);
+        imageContainer.classList.remove("url_image");
+        inputContainer.style.display = "flex";
+        if (previewImageContainer.children.length) {
+          previewImageContainer.removeChild(prevImage);
+          previewImageContainer.classList.remove("url_image");
+        }
+        clearSubmitButtonContainer.style.display = "none";
+      });
 
-        submitImageButton.addEventListener("click", () => {
-          previewImageContainer.classList.add("url_image");
-          previewImageContainer.appendChild(prevImage);
+
+
+      const convertBase64 = () => {
+        return new Promise((resolve, reject) => {
+          const fileReader = new FileReader()
+          fileReader.readAsDataURL(imgFile)
+
+          fileReader.onload = () => {
+            resolve(fileReader.result)
+          };
+
+          fileReader.onerror = (error) => {
+            reject(error)
+          };
         });
-      </script>
-</body>
+      };
+
+      function show(data) {
+        let tab =
+          `<tr>
+                  <th>Label</th>
+                  <th>Confidence</th>
+                 </tr>`;
+
+        // Loop to access all rows
+        for (let r of data) {
+          tab += `<tr>
+            <td>${r.label} </td>
+            
+            <td>${r.confidence}</td>
+        </tr>`;
+        }
+        // Setting innerHTML as tab variable
+        document.getElementById("data-table").innerHTML = tab;
+      }
+
+
+      const predictImg = async () => {
+        const basedata = await convertBase64()
+
+        if (basedata) {
+
+          const res = await fetch("https://haddy-catdenfy.hf.space/run/predict", {
+            "method": "POST",
+            "headers": { "Content-Type": "application/json" },
+            "body": JSON.stringify({
+              data: [basedata]
+            })
+          });
+          return res.json()
+        }
+
+      };
+
+      submitImageButton.addEventListener("click", async() => {
+        previewImageContainer.classList.add("url_image");
+        previewImageContainer.appendChild(prevImage);
+        console.log(predictImg())
+        const result =  await(predictImg())
+        if(result?.data){
+          show(result?.data[0]?.confidences)
+        }
+      });
+    </script>
+  </body>
 </html>
