@@ -1,5 +1,5 @@
 header {
-    background-color: white;
+    background-color: rgb(134, 91, 91);
     display: flex;
     justify-content:space-between;
     border-bottom: 1px solid #cccccc;
@@ -9,5 +9,6 @@ header .welcome {
     margin-right: 30px;
     font-size: large;
     margin-top: 20px;
+    
 }
 
